@@ -62,6 +62,26 @@ const typeIcons = {
   [EntryType.APP]: AppWindow,
 } as const;
 
+const entryTypes: EntryType[] = [
+  EntryType.NEWS,
+  EntryType.ARTICLE,
+  EntryType.PRODUCT,
+  EntryType.KNOWLEDGE,
+  EntryType.APP,
+];
+
+const contactStatuses: ContactStatus[] = [
+  ContactStatus.NEW,
+  ContactStatus.READ,
+  ContactStatus.RESOLVED,
+];
+
+const commentStatuses: CommentStatus[] = [
+  CommentStatus.PENDING,
+  CommentStatus.APPROVED,
+  CommentStatus.REJECTED,
+];
+
 export default async function AdminPage({ searchParams }: AdminPageProps) {
   await connection();
 
@@ -223,7 +243,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                     defaultValue={entryToEdit?.type ?? EntryType.NEWS}
                     className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 outline-none transition focus:border-cyan-500 focus:bg-white"
                   >
-                    {Object.values(EntryType).map((type) => (
+                    {entryTypes.map((type) => (
                       <option key={type} value={type}>
                         {entryTypeMeta[type].label}
                       </option>
@@ -660,7 +680,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                     </div>
                     <p className="mt-4 text-sm leading-7 text-slate-700">{message.message}</p>
                     <div className="mt-4 flex flex-wrap gap-2">
-                      {Object.values(ContactStatus).map((status) => (
+                      {contactStatuses.map((status) => (
                         <form key={status} action={updateContactStatusAction}>
                           <input type="hidden" name="id" value={message.id} />
                           <input type="hidden" name="status" value={status} />
@@ -715,7 +735,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                     <p className="mt-4 text-sm leading-7 text-slate-700">{comment.body}</p>
 
                     <div className="mt-4 flex flex-wrap gap-2">
-                      {Object.values(CommentStatus).map((status) => (
+                      {commentStatuses.map((status) => (
                         <form key={status} action={updateCommentStatusAction}>
                           <input type="hidden" name="id" value={comment.id} />
                           <input type="hidden" name="status" value={status} />
