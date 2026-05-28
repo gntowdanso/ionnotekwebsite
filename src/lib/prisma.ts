@@ -1,0 +1,27 @@
+import "server-only";
+
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
+
+declare global {
+  var prismaGlobal: PrismaClient | undefined;
+}
+
+const connectionString = process.env.DATABASE_WEB_URL;
+
+const adapter = connectionString
+  ? new PrismaPg({
+      connectionString,
+    })
+  : undefined;
+
+export const prisma =
+  global.prismaGlobal ??
+  new PrismaClient({
+    adapter,
+    log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  global.prismaGlobal = prisma;
+}

@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum EntryType {
+  NEWS
+  ARTICLE
+  PRODUCT
+  KNOWLEDGE
+  APP
+}
+
+enum AppPlatform {
+  ANDROID
+  IOS
+  CROSS_PLATFORM
+  WEB
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  RESOLVED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model CmsContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CmsEntry {
+  id                   String         @id @default(cuid())
+  type                 EntryType
+  title                String
+  slug                 String         @unique
+  summary              String
+  content              String
+  imageUrl             String?
+  imageAlt             String?
+  published            Boolean        @default(true)
+  featured             Boolean        @default(false)
+  appPlatform          AppPlatform?
+  downloadUrl          String?
+  secondaryDownloadUrl String?
+  commentsEnabled      Boolean        @default(true)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  comments             EntryComment[]
+
+  @@index([type, published, createdAt])
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  company   String?
+  subject   String?
+  message   String
+  status    ContactStatus @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model EntryComment {
+  id          String        @id @default(cuid())
+  entryId     String
+  authorName  String
+  authorEmail String
+  body        String
+  status      CommentStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  entry        CmsEntry      @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  @@index([entryId, status, createdAt])
+}
