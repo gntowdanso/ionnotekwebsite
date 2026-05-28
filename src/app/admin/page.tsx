@@ -26,6 +26,7 @@ import {
   updateCommentStatusAction,
   updateContactStatusAction,
 } from "@/app/admin/actions";
+import { BrandMark } from "@/components/brand-mark";
 import { getAdminSession } from "@/lib/admin-auth";
 import {
   CommentStatus,
@@ -167,14 +168,18 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         <header className="flex flex-col gap-6 rounded-[2rem] border border-white/10 bg-slate-950 px-6 py-6 text-white shadow-[0_28px_90px_rgba(3,26,47,0.28)] sm:px-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/8 px-4 py-2 text-sm text-slate-100">
+              <BrandMark className="h-8 w-8" title="Ionnotek mark" />
               <ShieldCheck className="h-4 w-4 text-cyan-300" />
               Signed in as {session.username}
             </div>
-            <div>
-              <p className="text-sm uppercase tracking-[0.28em] text-cyan-300">Ionnotek CMS</p>
-              <h1 className="mt-2 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
-                Content, apps, messages, and moderation
-              </h1>
+            <div className="flex items-start gap-4">
+              <BrandMark className="h-14 w-14 shrink-0" title="Ionnotek mark" />
+              <div>
+                <p className="text-sm uppercase tracking-[0.28em] text-cyan-300">Ionnotek CMS</p>
+                <h1 className="mt-2 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
+                  Content, apps, messages, and moderation
+                </h1>
+              </div>
             </div>
             <p className="max-w-3xl text-sm leading-7 text-slate-300 sm:text-base">
               Manage main website information, create and edit news, articles, products, knowledge

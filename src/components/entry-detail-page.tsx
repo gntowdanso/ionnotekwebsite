@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { submitCommentAction } from "@/app/site-actions";
+import { PublicSiteShell } from "@/components/public-site-shell";
 import { getEntryCollectionPath, type ManagedEntryWithComments } from "@/lib/cms-data";
 
 type EntryDetailPageProps = {
@@ -16,19 +17,20 @@ export function EntryDetailPage({ entry, commentState }: EntryDetailPageProps) {
   const paragraphs = entry.content.split(/\n\s*\n/).filter(Boolean);
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#031423_0%,#062847_22%,#eef6ff_22%,#f8fbff_100%)]">
-      <section className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pb-16 pt-10 sm:px-10 lg:pb-24">
-        <div className="flex items-center justify-between rounded-full border border-white/10 bg-white/8 px-4 py-3 text-white backdrop-blur md:px-6">
-          <div>
-            <p className="text-sm uppercase tracking-[0.34em] text-cyan-300">Ionnotek</p>
-            <p className="text-xs text-slate-300">Content and product experience</p>
+    <PublicSiteShell>
+      <main className="min-h-screen bg-[linear-gradient(180deg,#031423_0%,#062847_22%,#eef6ff_22%,#f8fbff_100%)]">
+        <section className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pb-16 pt-10 sm:px-10 lg:pb-24">
+          <div className="flex items-center justify-between rounded-[1.6rem] border border-white/10 bg-white/8 px-4 py-4 text-white backdrop-blur md:px-6">
+            <div>
+              <p className="text-sm uppercase tracking-[0.34em] text-cyan-300">Ionnotek</p>
+              <p className="text-xs text-slate-300">Content and product experience</p>
+            </div>
+            <Link href={collectionPath} className="text-sm text-slate-200 transition hover:text-white">
+              Back to listing
+            </Link>
           </div>
-          <Link href={collectionPath} className="text-sm text-slate-200 transition hover:text-white">
-            Back to listing
-          </Link>
-        </div>
 
-        <article className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
+          <article className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
           {entry.imageUrl ? (
             <div className="relative h-80 w-full bg-slate-100">
               <Image src={entry.imageUrl} alt={entry.imageAlt || entry.title} fill className="object-cover" sizes="100vw" />
@@ -64,9 +66,9 @@ export function EntryDetailPage({ entry, commentState }: EntryDetailPageProps) {
               </div>
             ) : null}
           </div>
-        </article>
+          </article>
 
-        <section id="comments" className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+          <section id="comments" className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
             <div className="flex items-center gap-3">
               <div className="rounded-2xl bg-cyan-50 p-3 text-cyan-700">
@@ -130,8 +132,9 @@ export function EntryDetailPage({ entry, commentState }: EntryDetailPageProps) {
               )}
             </div>
           </div>
+          </section>
         </section>
-      </section>
-    </main>
+      </main>
+    </PublicSiteShell>
   );
 }

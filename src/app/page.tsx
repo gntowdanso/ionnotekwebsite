@@ -11,9 +11,11 @@ import {
 import Link from "next/link";
 import { connection } from "next/server";
 
+import { BrandMark } from "@/components/brand-mark";
 import { ContactForm } from "@/components/contact-form";
 import { EntryCard } from "@/components/entry-card";
 import { HashAnchorScroller } from "@/components/hash-anchor-scroller";
+import { PublicSiteShell } from "@/components/public-site-shell";
 import { EntryType, getEntriesByType } from "@/lib/cms-data";
 import { getCmsIcon } from "@/lib/cms-icons";
 import { getSiteContent } from "@/lib/site-content";
@@ -41,36 +43,13 @@ export default async function Home() {
   const insightEntries = [...newsEntries, ...articleEntries, ...knowledgeEntries].slice(0, 6);
 
   return (
-    <main className="overflow-hidden bg-[linear-gradient(180deg,#02111f_0%,#073459_17%,#edf6ff_17%,#f4f9ff_100%)] text-slate-950">
-      <HashAnchorScroller />
-      <section className="relative isolate overflow-hidden">
+    <PublicSiteShell>
+      <main className="overflow-hidden bg-[linear-gradient(180deg,#02111f_0%,#073459_17%,#edf6ff_17%,#f4f9ff_100%)] text-slate-950">
+        <HashAnchorScroller />
+        <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(18,153,214,0.35),_transparent_24%),radial-gradient(circle_at_top_right,_rgba(255,255,255,0.14),_transparent_20%)]" />
 
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-14 px-6 pb-16 pt-8 sm:px-10 lg:px-12 lg:pb-24">
-          <header className="flex flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-white/12 bg-slate-950/72 px-4 py-4 text-white shadow-[0_20px_50px_rgba(2,17,31,0.28)] md:px-6">
-            <div>
-              <p className="text-sm uppercase tracking-[0.34em] text-cyan-300">{content.brand.name}</p>
-              <p className="text-xs text-slate-200">{content.brand.tagline}</p>
-            </div>
-            <nav className="hidden flex-wrap items-center gap-6 text-sm text-slate-100 md:flex">
-              <a href="#about" className="transition hover:text-white">
-                About
-              </a>
-              <a href="#services" className="transition hover:text-white">
-                Services
-              </a>
-              <a href="#apps" className="transition hover:text-white">
-                Apps
-              </a>
-              <a href="#stories" className="transition hover:text-white">
-                Stories
-              </a>
-              <a href="#contact" className="transition hover:text-white">
-                Contact
-              </a>
-            </nav>
-          </header>
-
           <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
             <div className="space-y-8 text-white">
               <div className="inline-flex items-center gap-3 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-xs uppercase tracking-[0.28em] text-cyan-200">
@@ -430,7 +409,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="contact" className="mx-auto w-full max-w-7xl scroll-mt-24 px-6 pb-20 sm:px-10 lg:px-12">
+      <section id="contact" className="mx-auto w-full max-w-7xl scroll-mt-32 px-6 pb-20 sm:px-10 lg:px-12">
         <div className="rounded-[2.2rem] bg-[linear-gradient(135deg,#031423_0%,#07365f_48%,#0b567c_100%)] p-8 text-white shadow-[0_32px_100px_rgba(3,26,47,0.24)] sm:p-10 lg:p-12">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div className="max-w-3xl">
@@ -459,6 +438,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </PublicSiteShell>
   );
 }

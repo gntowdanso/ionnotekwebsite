@@ -23,7 +23,9 @@ export function HashAnchorScroller() {
           return;
         }
 
-        const targetTop = target.getBoundingClientRect().top + window.scrollY - 24;
+        const stickyHeader = document.querySelector<HTMLElement>("[data-site-header]");
+        const stickyOffset = stickyHeader ? stickyHeader.getBoundingClientRect().height + 16 : 24;
+        const targetTop = target.getBoundingClientRect().top + window.scrollY - stickyOffset;
         window.scrollTo({ top: Math.max(targetTop, 0), behavior: attempt === 0 ? "auto" : "smooth" });
 
         if (attempt < 4 && Math.abs(target.getBoundingClientRect().top) > 8) {

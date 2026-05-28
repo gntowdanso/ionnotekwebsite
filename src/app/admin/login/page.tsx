@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { redirect } from "next/navigation";
 
 import { loginAction } from "@/app/admin/actions";
+import { BrandMark } from "@/components/brand-mark";
 import { getAdminSession } from "@/lib/admin-auth";
 
 type LoginPageProps = {
@@ -27,8 +28,11 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
       <div className="mx-auto grid min-h-[calc(100vh-5rem)] w-full max-w-6xl items-center gap-10 lg:grid-cols-[1fr_0.95fr]">
         <section className="space-y-8 text-white">
           <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm backdrop-blur">
-            <ShieldCheck className="h-4 w-4 text-cyan-300" />
-            Ionnotek Admin CMS
+            <BrandMark className="h-8 w-8" title="Ionnotek mark" />
+            <span className="inline-flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-cyan-300" />
+              Ionnotek Admin CMS
+            </span>
           </div>
           <div className="space-y-5">
             <h1 className="max-w-3xl text-5xl font-semibold tracking-[-0.06em] sm:text-6xl">
@@ -55,7 +59,8 @@ export default async function AdminLoginPage({ searchParams }: LoginPageProps) {
 
         <section className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_30px_90px_rgba(3,26,47,0.18)] sm:p-10">
           <div className="flex items-center gap-4">
-            <div className="rounded-2xl bg-cyan-50 p-3 text-cyan-700">
+            <div className="flex items-center gap-3 rounded-2xl bg-cyan-50 p-3 text-cyan-700">
+              <BrandMark className="h-10 w-10" title="Ionnotek mark" />
               <LockKeyhole className="h-6 w-6" />
             </div>
             <div>

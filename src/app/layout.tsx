@@ -17,6 +17,11 @@ export const metadata: Metadata = {
   title: "Ionnotek",
   description:
     "Ionnotek delivers digitization, office automation, custom software, AI solutions, reporting platforms, and ICT training.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
