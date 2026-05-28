@@ -34,6 +34,9 @@ import {
   getAllEntries,
   getComments,
   getContactMessages,
+  type ManagedComment,
+  type ManagedContactMessage,
+  type ManagedEntry,
 } from "@/lib/cms-data";
 import { getSiteContent, serializeSiteContent } from "@/lib/site-content";
 
@@ -76,13 +79,15 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     searchParams,
   ]);
 
-  const entryToEdit = params.edit ? entries.find((entry) => entry.id === params.edit) : undefined;
+  const entryToEdit = params.edit
+    ? entries.find((entry: ManagedEntry) => entry.id === params.edit)
+    : undefined;
   const entryCounts = {
-    [EntryType.NEWS]: entries.filter((entry) => entry.type === EntryType.NEWS).length,
-    [EntryType.ARTICLE]: entries.filter((entry) => entry.type === EntryType.ARTICLE).length,
-    [EntryType.PRODUCT]: entries.filter((entry) => entry.type === EntryType.PRODUCT).length,
-    [EntryType.KNOWLEDGE]: entries.filter((entry) => entry.type === EntryType.KNOWLEDGE).length,
-    [EntryType.APP]: entries.filter((entry) => entry.type === EntryType.APP).length,
+    [EntryType.NEWS]: entries.filter((entry: ManagedEntry) => entry.type === EntryType.NEWS).length,
+    [EntryType.ARTICLE]: entries.filter((entry: ManagedEntry) => entry.type === EntryType.ARTICLE).length,
+    [EntryType.PRODUCT]: entries.filter((entry: ManagedEntry) => entry.type === EntryType.PRODUCT).length,
+    [EntryType.KNOWLEDGE]: entries.filter((entry: ManagedEntry) => entry.type === EntryType.KNOWLEDGE).length,
+    [EntryType.APP]: entries.filter((entry: ManagedEntry) => entry.type === EntryType.APP).length,
   };
 
   const cards = [
@@ -97,7 +102,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     { label: "Contact Messages", value: contacts.length, icon: Inbox },
     {
       label: "Pending Comments",
-      value: comments.filter((comment) => comment.status === CommentStatus.PENDING).length,
+      value: comments.filter((comment: ManagedComment) => comment.status === CommentStatus.PENDING).length,
       icon: ShieldCheck,
     },
   ];
@@ -636,7 +641,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   No contact messages yet.
                 </div>
               ) : (
-                contacts.map((message) => (
+                contacts.map((message: ManagedContactMessage) => (
                   <article key={message.id} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
@@ -688,7 +693,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   No comments submitted yet.
                 </div>
               ) : (
-                comments.map((comment) => (
+                comments.map((comment: ManagedComment & { entry: ManagedEntry }) => (
                   <article key={comment.id} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
