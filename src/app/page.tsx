@@ -45,12 +45,12 @@ export default async function Home() {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(18,153,214,0.35),_transparent_24%),radial-gradient(circle_at_top_right,_rgba(255,255,255,0.14),_transparent_20%)]" />
 
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-14 px-6 pb-16 pt-8 sm:px-10 lg:px-12 lg:pb-24">
-          <header className="flex items-center justify-between rounded-full border border-white/15 bg-slate-950/30 px-4 py-3 text-white backdrop-blur md:px-6">
+          <header className="flex flex-wrap items-center justify-between gap-4 rounded-[1.75rem] border border-white/12 bg-slate-950/72 px-4 py-4 text-white shadow-[0_20px_50px_rgba(2,17,31,0.28)] md:px-6">
             <div>
               <p className="text-sm uppercase tracking-[0.34em] text-cyan-300">{content.brand.name}</p>
               <p className="text-xs text-slate-200">{content.brand.tagline}</p>
             </div>
-            <nav className="hidden items-center gap-6 text-sm text-slate-100 md:flex">
+            <nav className="hidden flex-wrap items-center gap-6 text-sm text-slate-100 md:flex">
               <a href="#about" className="transition hover:text-white">
                 About
               </a>
@@ -104,7 +104,7 @@ export default async function Home() {
 
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {content.stats.map((stat) => (
-                  <div key={stat.label} className="rounded-[1.5rem] border border-white/15 bg-slate-950/22 p-4 backdrop-blur">
+                  <div key={stat.label} className="rounded-[1.5rem] border border-white/14 bg-slate-950/52 p-4 shadow-[0_16px_35px_rgba(2,17,31,0.2)]">
                     <p className="text-3xl font-semibold tracking-[-0.05em] text-white">{stat.value}</p>
                     <p className="mt-2 text-sm leading-6 text-slate-100">{stat.label}</p>
                   </div>
@@ -112,7 +112,7 @@ export default async function Home() {
               </div>
             </div>
 
-            <aside className="rounded-[2rem] border border-white/15 bg-slate-950/28 p-6 text-white shadow-[0_28px_90px_rgba(3,26,47,0.34)] backdrop-blur sm:p-8">
+            <aside className="rounded-[2rem] border border-white/15 bg-slate-950/72 p-6 text-white shadow-[0_28px_90px_rgba(3,26,47,0.34)] sm:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-sm uppercase tracking-[0.26em] text-cyan-200">Why Ionnotek</p>
@@ -157,19 +157,24 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="about" className="mx-auto grid w-full max-w-7xl gap-8 px-6 py-16 sm:px-10 lg:grid-cols-[0.85fr_1.15fr] lg:px-12 lg:py-24">
-        <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-cyan-700">About</p>
-          <h2 className="mt-4 text-4xl font-semibold tracking-[-0.05em] text-slate-950 sm:text-5xl">
-            {content.about.title}
-          </h2>
-        </div>
-        <div className="grid gap-5">
-          {content.about.paragraphs.map((paragraph) => (
-            <p key={paragraph} className="text-base leading-8 text-slate-700 sm:text-lg">
-              {paragraph}
+      <section id="about" className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-10 lg:px-12 lg:py-24">
+        <div className="grid gap-8 rounded-[2rem] border border-sky-100 bg-white p-7 shadow-[0_24px_60px_rgba(3,26,47,0.08)] sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-10">
+          <div className="space-y-5">
+            <p className="text-sm uppercase tracking-[0.3em] text-cyan-700">About</p>
+            <h2 className="text-4xl font-semibold tracking-[-0.05em] text-slate-950 sm:text-5xl">
+              {content.about.title}
+            </h2>
+            <p className="max-w-md text-sm leading-7 text-slate-600 sm:text-base">
+              Practical digital transformation, clearer operations, and software that fits the way teams already work.
             </p>
-          ))}
+          </div>
+          <div className="grid gap-4">
+            {content.about.paragraphs.map((paragraph) => (
+              <div key={paragraph} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-5 sm:px-6">
+                <p className="text-base leading-8 text-slate-800 sm:text-lg">{paragraph}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

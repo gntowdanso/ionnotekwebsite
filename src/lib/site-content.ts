@@ -84,6 +84,11 @@ const contactSchema = z.object({
   location: z.string().min(1),
 });
 
+function parseWithFallback<T>(schema: z.ZodType<T>, value: unknown, fallback: T) {
+  const result = schema.safeParse(value);
+  return result.success ? result.data : fallback;
+}
+
 export const siteContentSchema = z.object({
   brand: brandSchema.default({
     name: "Ionnotek",
@@ -500,9 +505,76 @@ export const defaultSiteContent: SiteContent = {
   },
 };
 
+export function normalizeSiteContent(input: unknown): SiteContent {
+  const source = input && typeof input === "object" ? (input as Record<string, unknown>) : {};
+  const sections =
+    source.sections && typeof source.sections === "object"
+      ? (source.sections as Record<string, unknown>)
+      : {};
+
+  return siteContentSchema.parse({
+    brand: parseWithFallback(brandSchema, source.brand, defaultSiteContent.brand),
+    hero: parseWithFallback(heroSchema, source.hero, defaultSiteContent.hero),
+    stats: parseWithFallback(z.array(statSchema).min(1), source.stats, defaultSiteContent.stats),
+    about: parseWithFallback(aboutSchema, source.about, defaultSiteContent.about),
+    services: parseWithFallback(
+      z.array(serviceSchema).min(1),
+      source.services,
+      defaultSiteContent.services,
+    ),
+    solutions: parseWithFallback(
+      z.array(productSchema).min(1),
+      source.solutions,
+      defaultSiteContent.solutions,
+    ),
+    missionVision: parseWithFallback(
+      missionVisionSchema,
+      source.missionVision,
+      defaultSiteContent.missionVision,
+    ),
+    values: parseWithFallback(z.array(valueSchema).min(1), source.values, defaultSiteContent.values),
+    team: parseWithFallback(z.array(teamMemberSchema).min(1), source.team, defaultSiteContent.team),
+    stories: parseWithFallback(
+      z.array(storySchema).min(1),
+      source.stories,
+      defaultSiteContent.stories,
+    ),
+    contact: parseWithFallback(contactSchema, source.contact, defaultSiteContent.contact),
+    sections: {
+      services: parseWithFallback(
+        sectionCopySchema,
+        sections.services,
+        defaultSiteContent.sections.services,
+      ),
+      apps: parseWithFallback(sectionCopySchema, sections.apps, defaultSiteContent.sections.apps),
+      values: parseWithFallback(
+        sectionCopySchema,
+        sections.values,
+        defaultSiteContent.sections.values,
+      ),
+      team: parseWithFallback(sectionCopySchema, sections.team, defaultSiteContent.sections.team),
+      stories: parseWithFallback(
+        sectionCopySchema,
+        sections.stories,
+        defaultSiteContent.sections.stories,
+      ),
+      insights: parseWithFallback(
+        sectionCopySchema,
+        sections.insights,
+        defaultSiteContent.sections.insights,
+      ),
+      contact: parseWithFallback(
+        sectionCopySchema,
+        sections.contact,
+        defaultSiteContent.sections.contact,
+      ),
+    },
+  });
+}
+
 export function parseSiteContentPayload(payload: string) {
   const parsed = JSON.parse(payload) as unknown;
-  return siteContentSchema.parse(parsed);
+  return normalizeSiteContent(parsed);
 }
 
 export function serializeSiteContent(content: SiteContent) {
@@ -519,8 +591,7 @@ export async function getSiteContent() {
       return defaultSiteContent;
     }
 
-    const result = siteContentSchema.safeParse(record.value);
-    return result.success ? result.data : defaultSiteContent;
+    return normalizeSiteContent(record.value);
   } catch {
     return defaultSiteContent;
   }

@@ -82,6 +82,15 @@ const commentStatuses: CommentStatus[] = [
   CommentStatus.REJECTED,
 ];
 
+const adminSections = [
+  { id: "entry-editor", label: "Entry editor", description: "Create or update news, apps, and public content." },
+  { id: "site-settings", label: "Site settings", description: "Homepage headings, contact details, and section copy." },
+  { id: "advanced-content", label: "Advanced content", description: "Structured JSON for services, team, values, and stories." },
+  { id: "managed-entries", label: "Managed entries", description: "Browse, edit, or delete public pages." },
+  { id: "contact-inbox", label: "Contact inbox", description: "Review and update website enquiries." },
+  { id: "comment-moderation", label: "Comment moderation", description: "Approve, reject, or delete comments." },
+] as const;
+
 export default async function AdminPage({ searchParams }: AdminPageProps) {
   await connection();
 
@@ -208,8 +217,35 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </div>
         ) : null}
 
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_18px_40px_rgba(3,26,47,0.06)] sm:p-6">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Quick Navigation</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-slate-950">
+                Move through the CMS faster
+              </h2>
+            </div>
+            <p className="max-w-2xl text-sm leading-7 text-slate-600">
+              The admin is grouped by task so you can jump between content creation, site settings, moderation, and inbox review without scrolling blindly.
+            </p>
+          </div>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {adminSections.map((section) => (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-4 transition hover:border-cyan-200 hover:bg-cyan-50/40"
+              >
+                <p className="text-sm font-semibold tracking-[-0.02em] text-slate-950">{section.label}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{section.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
+          <section id="entry-editor" className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Entry Editor</p>
@@ -395,7 +431,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </section>
 
           <div className="grid gap-6">
-            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
+            <section id="site-settings" className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Structured Site Settings</p>
@@ -529,7 +565,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
               </form>
             </section>
 
-            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
+            <section id="advanced-content" className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Advanced Website Info</p>
@@ -538,7 +574,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
                   </h2>
                 </div>
                 <p className="max-w-lg text-sm leading-7 text-slate-600">
-                  Use the advanced editor for arrays like services, team, values, stories, and any bulk content you want total control over.
+                  Use the advanced editor for arrays like services, team, values, and stories. It accepts strict JSON and now fills in any missing structured defaults before saving.
                 </p>
               </div>
 
@@ -564,7 +600,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </div>
         </section>
 
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
+        <section id="managed-entries" className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Managed Entries</p>
@@ -647,7 +683,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
         </section>
 
         <section className="grid gap-6 xl:grid-cols-2">
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
+          <section id="contact-inbox" className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Contact Inbox</p>
               <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-slate-950">
@@ -699,7 +735,7 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             </div>
           </section>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
+          <section id="comment-moderation" className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Comment Moderation</p>
               <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-slate-950">

@@ -23,7 +23,7 @@ import {
   updateContactStatus,
   upsertEntry,
 } from "@/lib/cms-data";
-import { getSiteContent, parseSiteContentPayload, saveSiteContent, siteContentSchema } from "@/lib/site-content";
+import { getSiteContent, normalizeSiteContent, parseSiteContentPayload, saveSiteContent } from "@/lib/site-content";
 import { saveImageUpload } from "@/lib/uploads";
 
 async function requireAdmin() {
@@ -78,7 +78,7 @@ export async function saveSiteSettingsAction(formData: FormData) {
 
   try {
     const current = await getSiteContent();
-    const nextContent = siteContentSchema.parse({
+    const nextContent = normalizeSiteContent({
       ...current,
       brand: {
         name: String(formData.get("brandName") ?? "").trim(),
