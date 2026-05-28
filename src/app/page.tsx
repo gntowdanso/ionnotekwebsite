@@ -13,6 +13,7 @@ import { connection } from "next/server";
 
 import { ContactForm } from "@/components/contact-form";
 import { EntryCard } from "@/components/entry-card";
+import { HashAnchorScroller } from "@/components/hash-anchor-scroller";
 import { EntryType, getEntriesByType } from "@/lib/cms-data";
 import { getCmsIcon } from "@/lib/cms-icons";
 import { getSiteContent } from "@/lib/site-content";
@@ -41,6 +42,7 @@ export default async function Home() {
 
   return (
     <main className="overflow-hidden bg-[linear-gradient(180deg,#02111f_0%,#073459_17%,#edf6ff_17%,#f4f9ff_100%)] text-slate-950">
+      <HashAnchorScroller />
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(18,153,214,0.35),_transparent_24%),radial-gradient(circle_at_top_right,_rgba(255,255,255,0.14),_transparent_20%)]" />
 
@@ -157,7 +159,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="about" className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-10 lg:px-12 lg:py-24">
+      <section id="about" className="mx-auto w-full max-w-7xl scroll-mt-24 px-6 py-16 sm:px-10 lg:px-12 lg:py-24">
         <div className="grid gap-8 rounded-[2rem] border border-sky-100 bg-white p-7 shadow-[0_24px_60px_rgba(3,26,47,0.08)] sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-10">
           <div className="space-y-5">
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-700">About</p>
@@ -259,7 +261,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="apps" className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-10 lg:px-12 lg:py-24">
+      <section id="apps" className="mx-auto w-full max-w-7xl scroll-mt-24 px-6 py-16 sm:px-10 lg:px-12 lg:py-24">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-700">{content.sections.apps.eyebrow}</p>
@@ -342,7 +344,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="stories" className="mx-auto w-full max-w-7xl px-6 pb-16 sm:px-10 lg:px-12 lg:pb-24">
+      <section id="stories" className="mx-auto w-full max-w-7xl scroll-mt-24 px-6 pb-16 sm:px-10 lg:px-12 lg:pb-24">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-cyan-700">{content.sections.stories.eyebrow}</p>
@@ -428,7 +430,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="contact" className="mx-auto w-full max-w-7xl px-6 pb-20 sm:px-10 lg:px-12">
+      <section id="contact" className="mx-auto w-full max-w-7xl scroll-mt-24 px-6 pb-20 sm:px-10 lg:px-12">
         <div className="rounded-[2.2rem] bg-[linear-gradient(135deg,#031423_0%,#07365f_48%,#0b567c_100%)] p-8 text-white shadow-[0_32px_100px_rgba(3,26,47,0.24)] sm:p-10 lg:p-12">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div className="max-w-3xl">

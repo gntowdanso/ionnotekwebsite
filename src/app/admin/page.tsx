@@ -2,6 +2,7 @@ import {
   AppWindow,
   FileText,
   GraduationCap,
+  LayoutDashboard,
   ImagePlus,
   Inbox,
   LogOut,
@@ -83,12 +84,36 @@ const commentStatuses: CommentStatus[] = [
 ];
 
 const adminSections = [
-  { id: "entry-editor", label: "Entry editor", description: "Create or update news, apps, and public content." },
-  { id: "site-settings", label: "Site settings", description: "Homepage headings, contact details, and section copy." },
-  { id: "advanced-content", label: "Advanced content", description: "Structured JSON for services, team, values, and stories." },
-  { id: "managed-entries", label: "Managed entries", description: "Browse, edit, or delete public pages." },
-  { id: "contact-inbox", label: "Contact inbox", description: "Review and update website enquiries." },
-  { id: "comment-moderation", label: "Comment moderation", description: "Approve, reject, or delete comments." },
+  {
+    id: "entry-editor",
+    label: "Entry editor",
+    description: "Create or update news, apps, and public content.",
+  },
+  {
+    id: "site-settings",
+    label: "Site settings",
+    description: "Homepage headings, contact details, and section copy.",
+  },
+  {
+    id: "advanced-content",
+    label: "Advanced content",
+    description: "Structured JSON for services, team, values, and stories.",
+  },
+  {
+    id: "managed-entries",
+    label: "Managed entries",
+    description: "Browse, edit, or delete public pages.",
+  },
+  {
+    id: "contact-inbox",
+    label: "Contact inbox",
+    description: "Review and update website enquiries.",
+  },
+  {
+    id: "comment-moderation",
+    label: "Comment moderation",
+    description: "Approve, reject, or delete comments.",
+  },
 ] as const;
 
 export default async function AdminPage({ searchParams }: AdminPageProps) {
@@ -217,33 +242,34 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
           </div>
         ) : null}
 
-        <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_18px_40px_rgba(3,26,47,0.06)] sm:p-6">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Quick Navigation</p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-slate-950">
-                Move through the CMS faster
-              </h2>
+        <div className="grid gap-6 xl:grid-cols-[18rem_minmax(0,1fr)] xl:items-start">
+          <aside className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-[0_18px_40px_rgba(3,26,47,0.06)] sm:p-6 xl:sticky xl:top-8">
+            <div className="flex items-center gap-3 rounded-[1.5rem] bg-slate-950 px-4 py-4 text-white">
+              <div className="rounded-2xl bg-white/10 p-2 text-cyan-300">
+                <LayoutDashboard className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-[0.24em] text-cyan-300">Admin Menu</p>
+                <p className="mt-1 text-sm text-slate-200">Navigate the CMS by section</p>
+              </div>
             </div>
-            <p className="max-w-2xl text-sm leading-7 text-slate-600">
-              The admin is grouped by task so you can jump between content creation, site settings, moderation, and inbox review without scrolling blindly.
-            </p>
-          </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {adminSections.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-4 transition hover:border-cyan-200 hover:bg-cyan-50/40"
-              >
-                <p className="text-sm font-semibold tracking-[-0.02em] text-slate-950">{section.label}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{section.description}</p>
-              </a>
-            ))}
-          </div>
-        </section>
+            <nav className="mt-5 grid gap-2" aria-label="Admin sections">
+              {adminSections.map((section, index) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="rounded-[1.35rem] border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-cyan-200 hover:bg-cyan-50/50"
+                >
+                  <p className="text-xs uppercase tracking-[0.22em] text-cyan-700">{String(index + 1).padStart(2, "0")}</p>
+                  <p className="mt-2 text-sm font-semibold tracking-[-0.02em] text-slate-950">{section.label}</p>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">{section.description}</p>
+                </a>
+              ))}
+            </nav>
+          </aside>
 
+          <div className="grid gap-6">
         <section className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
           <section id="entry-editor" className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_40px_rgba(3,26,47,0.06)]">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -799,6 +825,8 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
             </div>
           </section>
         </section>
+          </div>
+        </div>
       </div>
     </main>
   );
